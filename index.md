@@ -9,14 +9,18 @@ Formally, the contrast between these two kinds of importance sampling can be obs
 ## Main Techniques
 
 To estimate the state value in **importance sampling**, first the _importance-sampling ratio_ is computed: <br>
-![Image](/assets/images/f1.PNG) where $\pi$ is the target policy, $b$ is the behavior policy and $T(t)$ is the time of termination of the episode starting at time $t$ (as episodes are observed under a single global time).\\\\ $\tau(s)$ is used to denote all time steps in which state s was visited (for a every-visit approach) or all the time steps where s was visited for the first time within an episode (for a first-visit approach).
+![Image](/assets/images/f1.PNG) <br>
+where ![Image](/assets/images/pi.PNG) is the target policy, *b* is the behavior policy and *T(t)* is the time of termination of the episode starting at time *t* (as episodes are observed under a single global time).
+
+
 
 There are two types of importance sampling:
-1. _ordinary importance sampling_ estimates the state value $v_\pi(s)$ by scaling the return of a state by the ratio and averaging the result:
-$$V(s) = \frac{\sum_t\in\tau(s) \rho_{t:T(t)-1} G_t}{|\tau(s)|}$$
+1. _ordinary importance sampling_ estimates the state value ![Image](/assets/images/statevalue.PNG) by scaling the return of a state by the ratio and averaging the result: <br> <br>
+![Image](/assets/images/ordinary.PNG) <br> where ![Image](/assets/images/tau.PNG) is used to denote all time steps in which state s was visited (for a every-visit approach) or all the time steps where s was visited for the first time within an episode (for a first-visit approach).
 
-2. _weighted importance sampling_ estimates the state value $v_\pi(s)$ by scaling the return of a state by the ratio and uses an weighted averaging of the result:
-$$V(s) = \frac{\sum_t\in\tau(s) \rho_{t:T(t)-1} G_t}{\sum_t\in\tau(s)\rho_{t:T(t)-1}}$$
+
+2. _weighted importance sampling_ estimates the state value ![Image](/assets/images/statevalue.PNG) by scaling the return of a state by the ratio and uses an weighted averaging of the result:<br> <br>
+![Image](/assets/images/weighted.PNG) <br> <br>
 
 
 ---
