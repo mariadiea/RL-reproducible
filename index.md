@@ -19,20 +19,22 @@ $$V(s) = \frac{\sum_t\in\tau(s) \rho_{t:T(t)-1} G_t}{|\tau(s)|}$$
 $$V(s) = \frac{\sum_t\in\tau(s) \rho_{t:T(t)-1} G_t}{\sum_t\in\tau(s)\rho_{t:T(t)-1}}$$
 
 
-**Monte Carlo methods** solve reinforcement learning problems based on averaging sample returns. They require no knowledge of the environment as they only require sample sequences of states, actions and rewards from past interaction with the environment. For the purpose of this assignment, and as a general way to ensure the availability of well-defined returns, we only analyze episodic tasks, i.e. experience is divided into episodes which are guaranteed to terminate. An incremental implementation of MC works on an episode-by-episode basis, where state values are computed after each episode instead of going through all available episodes before updating.
+---
 
- _Off-policy MC methods_ learn the target policy which then becomes the optimal policy, and use a behavior policy which is exploratory to generate behavior. Here importance sampling is used, where one distribution is used for sampling experience, and a second distribution which estimated the expected values given said experience.
+**Monte Carlo methods** solve reinforcement learning problems based on averaging sample returns. They require no knowledge of the environment as they only require sample sequences of states, actions and rewards from past interaction with the environment. For the purpose of this assignment, and as a general way to ensure the availability of well-defined returns, we only analyze episodic tasks, i.e. experience is divided into episodes which are guaranteed to terminate. Off-policy MC methods learn the target policy which then becomes the optimal policy, and use a behavior policy which is exploratory to generate behavior. Here importance sampling is used, where one distribution is used for sampling experience, and a second distribution which estimated the expected values given said experience. An incremental implementation of MC works on an episode-by-episode basis, where state values are computed after each episode instead of going through all available episodes before updating.<br>
+
+*Incremental MC using Weighted Importance Sampling*[1] <br> <br>
+ ![Image](/assets/images/mcweighted.PNG) <br> <br>
  
- *Weighted importance sampling incremental MC* as taken from Sutton et al.[1]:
- ![Image](/assets/images/mcweighted.pdf)
-
+ 
+*Incremental MC using Ordinary Importance Sampling* <br> <br>
+ ![Image](/assets/images/mcordinary.PNG) <br> <br>
+ 
+ ---
 
 **Temporal Difference methods** borrow approaches from both Monte Carlo ideas, as they learn from experience without environment knowledge, and Dynamic Programming ideas, as estimate updates are based on other estimates, without waiting for an outcome (this method is referred to as _bootstrapping_). TD methods are implemented in an online, incremental fashion. 
 
-The simplest _on-policy TD method_ is the one-step TD, or TD(0), where $V(s_t)$ is updated based on the reward observed at time $t+1$ and the value of $V(s_{t+1})$. For the control problem, the Sarsa algorithm is used, where an action-value is learned based on a given policy.
-
-
-_Off-policy TD_ for the control problem introduces the _Q-learning_ algorithm. Here, the state-action value $Q(S_t, A_t)$ is updated incrementally:
+Off-policy TD for the control problem introduces the _Q-learning_ algorithm. Here, the state-action value $Q(S_t, A_t)$ is updated incrementally:
 $$Q(S_t, A_t) = Q(S_t, A_t) + \alpha[R_{t+1} + \gamma max_a Q(S_{t+1}, a) - Q(S_t, A_t)]$$
 where $\alpha\in(0,1]$ is the step size, $\gamma$ is the discount factor and $max_a$, the maximum reward that is reachable in the next state. <br>
 Q-learning learns the optimal policy even when actions are selected according to a more exploratory policy. Given state S, action A is chosen from a policy derived from Q (eg. $\epsilon$-greedy or even random).
