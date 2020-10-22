@@ -1,3 +1,3 @@
 theme: jekyll-theme-cayman
-title: RL Reproducible Research Assignment
-description: myCustomAndDetailedDescription
+title: Off-policy Learning and Importance Sampling
+description: Is weighted importance sampling really better than ordinary?
