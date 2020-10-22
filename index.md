@@ -1,18 +1,20 @@
 _Maria Diea_, _Diana Epureanu_ and _Teodora Stoenescu_
 
-### Motivation
+## Motivation
 
 _Off-policy methods_ make use of two policies: one is evaluated and improved, and one is used to generate behavior. Computing the return of taking an action is expensive, therefore most off-policy methods utilize _importance sampling_ to estimate the returns under the target policy by using the returns under the behavior one. This project presents a comparison between **ordinary** and **weighted** importance sampling by experimenting with different algorithms, namely _TD_ and _Monte-Carlo_, in several environments. 
 
 Formally, the contrast between these two kinds of importance sampling can be observed in their biases and variances. Sutton et al.[1] argue that ordinary importance sampling produces unbiased estimates, but presents large and even infinite variance. Weighted importance sampling is preferred for its lower, finite variance. In this study we put these hypotheses to test. Since we are analyzing each importance sampling method in various scenarios, we can discover which parameters of our study influence the samplers' performance and how. This will lead to a better understanding on how each sampling method works, when it works best and why.  
 
-### Main Techniques
+## Main Techniques
 
 **Monte Carlo methods** solve reinforcement learning problems based on averaging sample returns. They require no knowledge of the environment as they only require sample sequences of states, actions and rewards from past interaction with the environment. For the purpose of this assignment, and as a general way to ensure the availability of well-defined returns, we only analyze episodic tasks, i.e. experience is divided into episodes which are guaranteed to terminate. An incremental implementation of MC works on an episode-by-episode basis, where state values are computed after each episode instead of going through all available episodes before updating.
 
 _On-policy MC methods_ learn action values for a near-optimal policy where exploration occurs. _Off-policy MC methods_ learn the target policy which then becomes the optimal policy, and use a behavior policy which is exploratory to generate behavior. Here importance sampling is used, where one distribution is used for sampling experience, and a second distribution which estimated the expected values given said experience.
 
 To estimate the state value in importance sampling, first the _importance-sampling ratio_ is computed:
+![Image](/assets/images/f1.PNG)
+
 ```$\rho_{t:T(t)-1} = \Pi_{k=1}^{T(t)-1}\frac{\pi(A_k|S_k)}{b(A_k|S_k)}$``` where $\pi$ is the target policy, $b$ is the behavior policy and $T(t)$ is the time of termination of the episode starting at time $t$ (as episodes are observed under a single global time).\\\\ $\tau(s)$ is used to denote all time steps in which state s was visited (for a every-visit approach) or all the time steps where s was visited for the first time within an episode (for a first-visit approach).\\
 There are two types of importance sampling:
 \begin{enumerate}
@@ -30,7 +32,7 @@ where $\alpha\in(0,1]$ is the step size, $\gamma$ is the discount factor and $ma
 Q-learning learns the optimal policy even when actions are selected according to a more exploratory policy. Given state S, action A is chosen from a policy derived from Q (eg. $\epsilon$-greedy or even random).
 
 
-### References
+## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA.
 
 
