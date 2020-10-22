@@ -54,6 +54,7 @@ For simplicity, we will focus on single agent, fully observable environments. Si
 This environment is used in the book [1] to showcase the performance of the MC prediction algorithm with weighted sampling. We are going to implement similar experiments for all of our other setups. <br>
 - target policy: *stick* if the player's sum is 20 or 21, otherwise *hit*.
 - behavior policy: *stick* or *hit* at random with equal probability. <br>
+<br>
 
 **Environment 2: Infinite Variance** <br>
 ![Image](/assets/images/env2.PNG) <br> <br>
