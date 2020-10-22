@@ -47,30 +47,36 @@ Let us recap the goal of this study: we are looking to study the performance of 
 4. SARSA - Weighted
 
 ### Environments
-For simplicity, we will focus on single agent, fully observable, deterministic environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments. Thus, we investigate the difference between the sampling techniques on combinations of continuous/discrete environments. All enviornments are originally developed by OpenAI and provided in the Gym toolkit.[2] 
+For simplicity, we will focus on single agent, fully observable environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments. Thus, we investigate the difference between the sampling techniques on combinations of continuous/discrete environments.
 
-**Environment 1: Blackjack**. The goal of blackjack is to obtain the greatest possible sum of cards without exceed 21. All face cards count as 10, while an ace can count either as 1 or as 11. All other cards have their usual value. A player can request more cards (hits), until he either stops (sticks) or exceeds 21 (goes bust). Rewards of +1, -1, and 0 are given for winning, losing and drawing, respectively. More details about the environment can be found on the GitHub page of the project.[3] 
+**Environment 1: Blackjack**. The goal of blackjack is to obtain the greatest possible sum of cards without exceed 21. All face cards count as 10, while an ace can count either as 1 or as 11. All other cards have their usual value. A player can request more cards (hits), until he either stops (sticks) or exceeds 21 (goes bust). Rewards of +1, -1, and 0 are given for winning, losing and drawing, respectively. This environment is originally developed by OpenAI and provided in the Gym toolkit[2]. More details can be found on the GitHub page of the project.[3] 
 
-This environment is used in the book [1] to showcase the performance of the MC prediction algorithm with weighted sampling. We are going to implement similar experiments for all of our other setups. 
+This environment is used in the book [1] to showcase the performance of the MC prediction algorithm with weighted sampling. We are going to implement similar experiments for all of our other setups. <br>
 - target policy: *stick* if the player's sum is 20 or 21, otherwise *hit*.
-- behavior policy: *stick* or *hit* at random with equal probability.
+- behavior policy: *stick* or *hit* at random with equal probability. <br>
 
-**Environment 2: **
-
+**Environment 2: Infinite Variance** <br>
+![Image](/assets/images/env2.PNG) <br> <br>
+Consider this simple environment presented in the book. There is one non-terminal state s and two actions, *right* and *left*. The *right* action goes to the termination state, while the *left* action has 0.9 probability to go back to *s* and 0.1 probability to terminate. The rewards are 1 for this last transition, otherwise 0. <br>
+- target policy: always *left*.
+- behavior policy: *right* or *left* at random with equal probability. <br>
+The value of s under the target policy is 1, but this example showcases that the estimates of MC with ordinary sampling will have infinite variance. We are curious to see whether this happens for the other setups as well.
 
 
 ### Baselines
+
 
 ### Hyperparameters
 
 ### Metrics
 
-A good measure on the quality of the predictions is the Mean Squared Error, measured for each episode over a number of runs. To determine the true value of the state function for each environment, we separately generate 100,000 episodes using the target policy and averaging their returns.
+A good measure on the quality of the predictions is the Mean Squared Error, measured for each episode over a number of runs. To determine the true value of the state function for each environment, we separately generate 100,000 episodes using the target policy and averaging their returns. This can also help us see whether the estimates have infinite variance.
 
 ### Runs
 
+Since we replicate experiments presented in the Sutton et al., we use the same setup they presented. The blackjack experiment has 100 runs with 10,000 episodes per run. The Infinite Variance experiment has 10 runs with 100,000,000 episodes.
 
 ## References
-[1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA.
-[2] https://gym.openai.com/
-[3] https://github.com/openai/gym/blob/master/gym/envs/toy_text/blackjack.py
+[1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA. <br>
+[2] https://gym.openai.com/ <br>
+[3] https://github.com/openai/gym/blob/master/gym/envs/toy_text/blackjack.py <br>
