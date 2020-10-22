@@ -44,7 +44,7 @@ Let us recap the goal of this study: we are looking to study the performance of 
 1. Monte Carlo - Ordinary
 2. Monte Carlo - Weighted
 3. SARSA - Ordinary
-4. Sarsa - Weighted
+4. SARSA - Weighted
 
 ### Environments
 For simplicity, we will focus on single agent, fully observable, deterministic environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments. Thus, we investigate the difference between the sampling techniques on combinations of continuous/discrete environments. All enviornments are originally developed by OpenAI and provided in the Gym toolkit.[2] 
@@ -52,8 +52,8 @@ For simplicity, we will focus on single agent, fully observable, deterministic e
 **Environment 1: Blackjack**. The goal of blackjack is to obtain the greatest possible sum of cards without exceed 21. All face cards count as 10, while an ace can count either as 1 or as 11. All other cards have their usual value. A player can request more cards (hits), until he either stops (sticks) or exceeds 21 (goes bust). Rewards of +1, -1, and 0 are given for winning, losing and drawing, respectively. More details about the environment can be found on the GitHub page of the project.[3] 
 
 This environment is used in the book [1] to showcase the performance of the MC prediction algorithm with weighted sampling. We are going to implement similar experiments for all of our other setups. 
-- target policy: *stick* if the player's sum is 20 or 21, otherwise *hit*
-- behavior policy: 
+- target policy: *stick* if the player's sum is 20 or 21, otherwise *hit*.
+- behavior policy: *stick* or *hit* at random with equal probability.
 
 **Environment 2: **
 
@@ -65,7 +65,7 @@ This environment is used in the book [1] to showcase the performance of the MC p
 
 ### Metrics
 
-A good measure on the quality of the predictions is the Mean Squared Error, measured for each episode over a number of runs. To determine the true value of the state function, we separately generate 100,000 episodes using the target policy and averaging their returns.
+A good measure on the quality of the predictions is the Mean Squared Error, measured for each episode over a number of runs. To determine the true value of the state function for each environment, we separately generate 100,000 episodes using the target policy and averaging their returns.
 
 ### Runs
 
