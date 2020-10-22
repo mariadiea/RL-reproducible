@@ -40,10 +40,24 @@ There are two types of importance sampling:
 
 ## Experimental Setup
 
-Let's define the experiments that we need to do.
+Let us recap the goal of this study: we are looking to study the performance of four off-policy methods for predicting a state function V.
+1. Monte Carlo - Ordinary
+2. Monte Carlo - Weighted
+3. SARSA - Ordinary
+4. Sarsa - Weighted
 
 ### Environments
-For simplicity, we will focus on single agent, fully observable, deterministic environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments. Thus, we  investigate the difference between the sampling techniques on combinations of continuous/discrete environments. 
+For simplicity, we will focus on single agent, fully observable, deterministic environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments. Thus, we investigate the difference between the sampling techniques on combinations of continuous/discrete environments. All enviornments are originally developed by OpenAI and provided in the Gym toolkit.[2] 
+
+**Environment 1: Blackjack**. The goal of blackjack is to obtain the greatest possible sum of cards without exceed 21. All face cards count as 10, while an ace can count either as 1 or as 11. All other cards have their usual value. A player can request more cards (hits), until he either stops (sticks) or exceeds 21 (goes bust). Rewards of +1, -1, and 0 are given for winning, losing and drawing, respectively. More details about the environment can be found on the GitHub page of the project.[3] 
+
+This environment is used in the book [1] to showcase the performance of the MC prediction algorithm with weighted sampling. We are going to implement similar experiments for all of our other setups. 
+- target policy: *stick* if the player's sum is 20 or 21, otherwise *hit*
+- behavior policy: 
+
+**Environment 2: **
+
+
 
 ### Baselines
 
@@ -51,47 +65,12 @@ For simplicity, we will focus on single agent, fully observable, deterministic e
 
 ### Metrics
 
+A good measure on the quality of the predictions is the Mean Squared Error, measured for each episode over a number of runs. To determine the true value of the state function, we separately generate 100,000 episodes using the target policy and averaging their returns.
+
 ### Runs
 
 
 ## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA.
-
-
-## Welcome to GitHub Pages
-
-You can use the [editor on GitHub](https://github.com/mariadiea/RL-reproducible/edit/gh-pages/index.md) to maintain and preview the content for your website in Markdown files.
-
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
-
-### Markdown
-
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
-
-```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
-```
-
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
-
-### Jekyll Themes
-
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/mariadiea/RL-reproducible/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://docs.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+[2] https://gym.openai.com/
+[3] https://github.com/openai/gym/blob/master/gym/envs/toy_text/blackjack.py
