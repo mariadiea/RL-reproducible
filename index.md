@@ -77,6 +77,23 @@ A good measure on the quality of the predictions is the Mean Squared Error, meas
 
 Since we replicate experiments presented in the Sutton et al., we use the same setup they presented. The blackjack experiment has 100 runs with 10,000 episodes per run. The Infinite Variance experiment has 10 runs with 100,000,000 episodes.
 
+## Results
+### Blackjack
+**Monte Carlo** <br>
+We plot the value function for the ordinary importance sampling (first row), weighted importance sampling (second row) and target value function (third row). From the plots it already is noticeable that the value function with the weighted importance sampling approaches the true value more than the ordinary importance sampling value function.<br>
+![Image](/assets/images/plots.png) <br> <br>
+
+The plot below depicts the mean squared error between the predicted value function (red for weighted and green for ordinary) and the target value function for the state (13, 2, True). <br>
+From this plot, it is clear that the weighted importance sampling creates a much smaller variance in the mean squared values than the ordinary one. To see the difference between the two, we calculate the variance of the mean squared error for both cases, and find that: 
+- Variance of ordinary MC mse: 0.2426
+- Variance of weighted MC mse: 0.0126 <br><br>
+
+There is one thing to notice: while the expected behavior for both ordinary and weighted imporance sampling techniques is for the MSE to decrease over the number of episodes, this is not the case. Firstly, it takes 100 episodes for the state to be accessed often enough to create a meaningful change in the MSE. Next, for the ordinary importance sampling value, it seems that the function does not converge while for the weighted importance sampling value, it converges to a wrong value (x instead of -0.277)<br>
+![Image](/assets/images/mc.png) <br> <br>
+
+
+
+
 ## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA. <br>
 [2] https://gym.openai.com/ <br>
