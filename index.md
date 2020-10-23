@@ -40,8 +40,6 @@ There are two types of importance sampling:
 ![Image](/assets/images/sarsarules.PNG) <br> <br>
 
 
-
-
 ## Experimental Setup
 
 Let us recap the goal of this study: we are looking to study the performance of four off-policy methods for predicting a state function V.
@@ -93,22 +91,33 @@ There is one thing to notice: while the expected behavior for both ordinary and 
 ![Image](/assets/images/mc.png) <br> <br>
 
 **Off-policy SARSA** <br>
-When using our variant of off-policy SARSA, it seems that the algorithm is not able to learn. The ordinary case does present a slight increase towards the end, but nothing conclusive. 
+When using our variant of off-policy SARSA, it seems that the algorithm is not able to learn. The ordinary case does present a slight increase towards the end, but nothing conclusive. This might be due to the fact that the state itself might not be visited very often.
 ![Image](/assets/images/weightedsarsa.png) <br> <br>
 
+To force the algorithm to learn, every 10 episode we change the starting state from random, to the one we're investingating: *(13, 2, True)*, and we evaluate it on 50,000 episodes for 100 runs. Below we can see that the MSE for the ordinary case increases alot and diverges. The weighted one starts to stabilize around a MSE of 0.1. <br>
+![Image](/assets/images/50.png) <br> <br>
 
 ### Infinite Variance
 **Monte Carlo** <br>
-In the figure below, state value functions for the ordinary importance sampling over 10 runs are plotted for 1M episodes. It is clear that the estimates produced are highly unstable, and fail to converge even after a very high number of episode to the true value of 1.
+In the figure below, state value functions for the ordinary importance sampling over 10 runs are plotted for 1M episodes. It is clear that the estimates produced are highly unstable, and fail to converge even after a very high number of episode to the true value of 1. 
 <br>
 ![Image](/assets/images/ordinarymc.jpeg) <br> <br>
 
-Weighted MC, In comparison, having the same 10 runs over 1M episodes, the state value functions for the weighted importance sampling produces some variance in the results, but the values are more bounded.
-The reason for this is that more episodes are probably needed in order to remove the bias that weighted approaches are prone to do. <br>
+Weighted MC, In comparison, having the same 10 runs over 1M episodes, the state value functions for the weighted importance sampling produces some variance in the results, but the values are more bounded. 
+The reason for this is that more episodes are probably needed in order to remove the bias that weighted approaches are prone to do. 
+
+<br>
 ![Image](/assets/images/weightedmc.jpeg) <br> <br>
 
 
 **Off-policy SARSA** <br>
+The values after 10,000 epsiodes lie between [0.6-2.93].<br>
+
+![Image](/assets/images/sarsavar.jpeg) <br> <br>
+
+The values after 10,000 epsiodes lie between [0.93-1.84] therefore it seems to have more of a converging behavior than the ordinary method. <br>
+
+![Image](/assets/images/sarsawe.png) <br> <br>
 
 ## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA. <br>
