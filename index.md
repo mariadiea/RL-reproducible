@@ -111,7 +111,7 @@ The reason for this is that more episodes are probably needed in order to remove
 
 
 **Off-policy SARSA** <br>
-The values after 10,000 epsiodes lie between [0.6-2.93].<br>
+The behavior is similar for SARSA. The values after 10,000 epsiodes lie between [0.6-2.93].<br>
 
 ![Image](/assets/images/sarsavar.jpeg) <br> <br>
 
