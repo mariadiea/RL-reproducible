@@ -120,11 +120,11 @@ The values after 10,000 epsiodes lie between [0.93-1.84] therefore it seems to h
 
 ## Discussion
 
-The results we have gather from our Blackjack experiment are in contradiction with the ones present in Suton et al. Neither the ordinary nor the weighted converge towards the optimal value function, even though this behavior is less obvious in SARSA but this might be due to a weak learning process. We saw that when using more episodes and forcing the environment to start from a certain state the SARSA values showed some diverging tendencies as well.
+The results we have gathered from our Blackjack experiment are in contradiction with the ones present in Suton et al. Neither the ordinary nor the weighted converge towards the optimal value function, even though this behavior is less obvious in SARSA but this might be due to a weak learning process. We saw that when using more episodes and forcing the environment to start from a certain state the SARSA values showed some diverging tendencies as well.
 
 The results for the infinite variance experiment are somewhat in line with what we expected. For both MC and SARSA ordinary sampling showed larger variance, while for weighted sampling all episodes converge towards a more bounded interval. 
 
-The difference between algorithm types that we notice is that our propsoed SARSA model is learning slowly because of the importance sampling and it might necessitate more episodes in order to observe its actual behavior. 
+The difference between algorithm types that we notice is that our propsoed SARSA model is learning slowly because of the importance sampling and it might necessitate more episodes in order to observe its actual behavior. Clearly importance sampling benefits Monte Carlo methods more, particularly the weighted method due to its low variance (and bias that converges towards zero). 
 
 ## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA. <br>
