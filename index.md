@@ -36,7 +36,11 @@ There are two types of importance sampling:
  
  ---
 
-**Temporal Difference methods** borrow approaches from both Monte Carlo ideas, as they learn from experience without environment knowledge, and Dynamic Programming ideas, as estimate updates are based on other estimates, without waiting for an outcome (this method is referred to as _bootstrapping_). TD methods are implemented in an online, incremental fashion. It is possible to learn a V function off-policy and to this end we can use the on-policy Sarsa algorithm and apply importance weights. 
+**Temporal Difference methods** borrow approaches from both Monte Carlo ideas, as they learn from experience without environment knowledge, and Dynamic Programming ideas, as estimate updates are based on other estimates, without waiting for an outcome (this method is referred to as _bootstrapping_). TD methods are implemented in an online, incremental fashion. It is possible to learn a V function off-policy and to this end we can use the on-policy Sarsa algorithm and apply importance weights. <br>
+![Image](/assets/images/sarsarules.PNG) <br> <br>
+
+
+
 
 ## Experimental Setup
 
@@ -47,7 +51,7 @@ Let us recap the goal of this study: we are looking to study the performance of 
 4. SARSA - Weighted
 
 ### Environments
-For simplicity, we will focus on single agent, fully observable environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments. Thus, we investigate the difference between the sampling techniques on combinations of continuous/discrete environments.
+For simplicity, we will focus on single agent, fully observable environments. Since we are investigating the Monte Carlo approach which approximates the value of a state-action pair by calculating the mean return from a collection of episodes, we will test the techniques only on episodic environments.
 
 **Environment 1: Blackjack**. The goal of blackjack is to obtain the greatest possible sum of cards without exceed 21. All face cards count as 10, while an ace can count either as 1 or as 11. All other cards have their usual value. A player can request more cards (hits), until he either stops (sticks) or exceeds 21 (goes bust). Rewards of +1, -1, and 0 are given for winning, losing and drawing, respectively. This environment is originally developed by OpenAI and provided in the Gym toolkit[2]. More details can be found on the GitHub page of the project.[3] 
 
@@ -64,11 +68,6 @@ Consider this simple environment presented in the book. There is one non-termina
 The value of s under the target policy is 1, but this example showcases that the estimates of MC with ordinary sampling will have infinite variance. We are curious to see whether this happens for the other setups as well.
 
 
-### Baselines
-
-
-### Hyperparameters
-
 ### Metrics
 
 A good measure on the quality of the predictions is the Mean Squared Error, measured for each episode over a number of runs. To determine the true value of the state function for each environment, we separately generate 100,000 episodes using the target policy and averaging their returns. This can also help us see whether the estimates have infinite variance.
@@ -78,7 +77,9 @@ A good measure on the quality of the predictions is the Mean Squared Error, meas
 Since we replicate experiments presented in the Sutton et al., we use the same setup they presented. The blackjack experiment has 100 runs with 10,000 episodes per run. The Infinite Variance experiment has 10 runs with 100,000,000 episodes.
 
 ## Results
-### Blackjack
+### Blackjack 
+As in the book, we evaluate the state in which the dealer is showing a deuce, the player has a sum of 13 and a usable ace *(13, 2, True)*. In this state, the target policy will always *stick*, therefore after computing the Q-values with SARSA, we can get the V value by looking at the corresponding cell in Q for action *stick*. 
+
 **Monte Carlo** <br>
 We plot the value function for the ordinary importance sampling (first row), weighted importance sampling (second row) and target value function (third row). From the plots it already is noticeable that the value function with the weighted importance sampling approaches the true value more than the ordinary importance sampling value function.<br>
 ![Image](/assets/images/plots.png) <br> <br>
@@ -88,11 +89,26 @@ From this plot, it is clear that the weighted importance sampling creates a much
 - Variance of ordinary MC mse: 0.2426
 - Variance of weighted MC mse: 0.0126 <br><br>
 
-There is one thing to notice: while the expected behavior for both ordinary and weighted imporance sampling techniques is for the MSE to decrease over the number of episodes, this is not the case. Firstly, it takes 100 episodes for the state to be accessed often enough to create a meaningful change in the MSE. Next, for the ordinary importance sampling value, it seems that the function does not converge while for the weighted importance sampling value, it converges to a wrong value (x instead of -0.277)<br>
+There is one thing to notice: while the expected behavior for both ordinary and weighted imporance sampling techniques is for the MSE to decrease over the number of episodes, this is not the case. Firstly, it takes 100 episodes for the state to be accessed often enough to create a meaningful change in the MSE. Next, for the ordinary importance sampling value, it seems that the function does not converge while for the weighted importance sampling value, it converges to a wrong value.<br>
 ![Image](/assets/images/mc.png) <br> <br>
 
+**Off-policy SARSA** <br>
+When using our variant of off-policy SARSA, it seems that the algorithm is not able to learn. The ordinary case does present a slight increase towards the end, but nothing conclusive. 
+![Image](/assets/images/weightedsarsa.png) <br> <br>
 
 
+### Infinite Variance
+**Monte Carlo** <br>
+In the figure below, state value functions for the ordinary importance sampling over 10 runs are plotted for 1M episodes. It is clear that the estimates produced are highly unstable, and fail to converge even after a very high number of episode to the true value of 1.
+<br>
+![Image](/assets/images/ordinarymc.jpeg) <br> <br>
+
+Weighted MC, In comparison, having the same 10 runs over 1M episodes, the state value functions for the weighted importance sampling produces some variance in the results, but the values are more bounded.
+The reason for this is that more episodes are probably needed in order to remove the bias that weighted approaches are prone to do. <br>
+![Image](/assets/images/weightedmc.jpeg) <br> <br>
+
+
+**Off-policy SARSA** <br>
 
 ## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA. <br>
