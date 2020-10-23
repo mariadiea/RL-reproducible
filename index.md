@@ -13,7 +13,6 @@ To estimate the state value in **importance sampling**, first the _importance-sa
 where ![Image](/assets/images/pi.PNG) is the target policy, *b* is the behavior policy and *T(t)* is the time of termination of the episode starting at time *t* (as episodes are observed under a single global time).
 
 
-
 There are two types of importance sampling:
 1. _ordinary importance sampling_ estimates the state value ![Image](/assets/images/statevalue.PNG) by scaling the return of a state by the ratio and averaging the result: <br> <br>
 ![Image](/assets/images/ordinary.PNG) <br> where ![Image](/assets/images/tau.PNG) is used to denote all time steps in which state s was visited (for a every-visit approach) or all the time steps where s was visited for the first time within an episode (for a first-visit approach).
@@ -118,6 +117,14 @@ The behavior is similar for SARSA. The values after 10,000 epsiodes lie between 
 The values after 10,000 epsiodes lie between [0.93-1.84] therefore it seems to have more of a converging behavior than the ordinary method. <br>
 
 ![Image](/assets/images/sarsawe.png) <br> <br>
+
+## Discussion
+
+The results we have gather from our Blackjack experiment are in contradiction with the ones present in Suton et al. Neither the ordinary nor the weighted converge towards the optimal value function, even though this behavior is less obvious in SARSA but this might be due to a weak learning process. We saw that when using more episodes and forcing the environment to start from a certain state the SARSA values showed some diverging tendencies as well.
+
+The results for the infinite variance experiment are somewhat in line with what we expected. For both MC and SARSA ordinary sampling showed larger variance, while for weighted sampling all episodes converge towards a more bounded interval. 
+
+The difference between algorithm types that we notice is that our propsoed SARSA model is learning slowly because of the importance sampling and it might necessitate more episodes in order to observe its actual behavior. 
 
 ## References
 [1] Richard S. Sutton and Andrew G. Barto. 2018. _Reinforcement Learning: An Introduction_. A Bradford Book, Cambridge, MA, USA. <br>
